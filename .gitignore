@@ -1,0 +1,5 @@
+*.ali
+*.o
+#binary
+vm
+vm_starter
