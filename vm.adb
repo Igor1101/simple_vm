@@ -9,15 +9,6 @@ procedure start is
 package INT_IO is new INTEGER_IO(INTEGER);
 use INT_IO;
 begin
-	cycle: loop
-	delay 0.2;
-		if  a = 100
-		then
-			exit cycle;
-		end if;
-		a:=a+1;
-        put("VM");
-	put(a);
-end loop cycle;
+	
 end start;
 end vm;

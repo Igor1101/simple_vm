@@ -2,6 +2,7 @@
 -- Simple VM
 -- CMD format: opcode | op0 (reg\mem) | op0 select bus | op1(reg\mem) | op1 select bus | integer value | 
 package vm is
+-- TYPES
 type CMD_OPCODE_T is (
         NOP, 
         JMP, 
@@ -24,11 +25,28 @@ type CMD_T is
                 opaccess1:  CMD_ACCESS_T;
                 value:   INTEGER;
         end record;
-PRG_LENGTH:constant integer:=255;
 type PRG_T is array (Natural range <>) of CMD_T;
+type FLAGS_T is
+	record
+		carry: BOOLEAN;
+		zero: BOOLEAN;
+		overflow: BOOLEAN;
+	end record;
+--------- VARIABLES --------------
+PRG_LENGTH:constant integer:=255;
 PRG_MEM: PRG_T (0..PRG_LENGTH);
 -- instructions --
 -- NOP 
 NOP_I : constant CMD_T := (NOP, 0, NO_ACCESS, 0, NO_ACCESS, 0);
+-- Registers --
+-- PROGRAM COUNTER
+PC:INTEGER := 0;
+-- STACK POINTER
+SP:INTEGER := 0;
+-- FLAGS
+FLAGS: FLAGS_T;
+-- GENERAL PURPOSE
+type REG_T is array (Natural range <>) of INTEGER;
+REG: REG_T(0..20);
 procedure start;
 end vm;
