@@ -9,6 +9,8 @@ procedure start is
 package INT_IO is new INTEGER_IO(INTEGER);
 use INT_IO;
 begin
-	
+	main_vm_loop: loop
+	-- process cmd loop engine
+end loop main_vm_loop;
 end start;
 end vm;
