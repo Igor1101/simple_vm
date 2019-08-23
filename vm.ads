@@ -25,9 +25,8 @@ type CMD_T is
                 value:   INTEGER;
         end record;
 PRG_LENGTH:constant integer:=255;
-type PRG_T is array (0..PRG_LENGTH) of CMD_T;
-type PRG_T_COPY is array (Natural range <>) of CMD_T;
-PRG_MEM: PRG_T;
+type PRG_T is array (Natural range <>) of CMD_T;
+PRG_MEM: PRG_T (0..PRG_LENGTH);
 -- instructions --
 -- NOP 
 NOP_I : constant CMD_T := (NOP, 0, NO_ACCESS, 0, NO_ACCESS, 0);
