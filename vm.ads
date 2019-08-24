@@ -1,31 +1,39 @@
 -- my first Ada program
 -- Simple VM
--- CMD format: opcode | op0 (reg\mem) | op0 select bus | op1(reg\mem) | op1 select bus | integer value | 
+-- CMD format: opcode | op0 (reg\mem\integer)  
 package vm is
 -- TYPES
 type CMD_OPCODE_T is (
+	-- NO OPERATION
         NOP, 
+	-- ABSOLUTE JUMP
         JMP, 
+	-- MOVE TO REG\MEM\AC FROM AC(BUS)
         MOV, 
+	-- MOVE TO AC FROM \REG\MEM\AC\IMMEDIATE
+	MOVA,
+	-- AC = AC + \REG\MEM\AC\IMMEDIATE
         ADD, 
+	-- PRINT INTEGER IN AC
         PRINT, 
+	-- AC = AC - \REG\MEM\AC\IMMEDIATE
         SUB, 
+	-- AC *= REG\MEM\AC\IMMEDIATE
         MUL);
 type CMD_ACCESS_T is (
         REGISTER,
         MEMORY,
         BUS,
+	IMMEDIATE,
 	NO_ACCESS);
 type CMD_T is
         record
                 opcode: CMD_OPCODE_T;
-                operand0: INTEGER;
-                opaccess0:  CMD_ACCESS_T;
-                operand1: INTEGER;
-                opaccess1:  CMD_ACCESS_T;
-                value:   INTEGER;
+                opaccess:  CMD_ACCESS_T;
+                operand: INTEGER;
         end record;
 type PRG_T is array (Natural range <>) of CMD_T;
+type DATA_T is array (Natural range <>) of INTEGER;
 type FLAGS_T is
 	record
 		carry: BOOLEAN;
@@ -35,9 +43,10 @@ type FLAGS_T is
 --------- VARIABLES --------------
 PRG_LENGTH:constant integer:=255;
 PRG_MEM: PRG_T (0..PRG_LENGTH);
+DATA_MEM: DATA_T (0..PRG_LENGTH);
 -- instructions --
 -- NOP 
-NOP_I : constant CMD_T := (NOP, 0, NO_ACCESS, 0, NO_ACCESS, 0);
+NOP_I : constant CMD_T := (NOP, NO_ACCESS, 0);
 -- Registers --
 -- PROGRAM COUNTER
 PC:INTEGER := 0;
@@ -49,7 +58,7 @@ FLAGS: FLAGS_T;
 type REG_T is array (Natural range <>) of INTEGER;
 REG: REG_T(0..20);
 -- ACCUMULATOR
-AC: REG_T;
+AC: INTEGER;
 -- procedures
 procedure start;
 procedure print_cmd(CMD: CMD_T) ;
@@ -60,4 +69,5 @@ function run_cmd_add(CMD: CMD_T) return INTEGER;
 function run_cmd_print(CMD: CMD_T) return INTEGER;
 function run_cmd_sub(CMD: CMD_T) return INTEGER;
 function run_cmd_mul(CMD: CMD_T) return INTEGER;
+function run_cmd_mova(CMD: CMD_T) return INTEGER;
 end vm;

@@ -2,7 +2,13 @@ with text_io; use text_io;
 with vm;
 use vm;
 procedure vm_starter is 
-	PROGRAM:constant PRG_T := ( NOP_I, NOP_I, NOP_I);
+	PROGRAM:constant PRG_T := ( 
+		NOP_I, 			-- 0
+		(MOVA, IMMEDIATE, 13 ),	-- 1
+		(MOV, REGISTER, 0),	-- 2
+		(ADD, REGISTER, 0),	-- 3
+		(JMP, IMMEDIATE, 3)	-- 4
+		);
 	i:integer := 0;
 begin
 	-- flash program:)
