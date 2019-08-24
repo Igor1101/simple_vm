@@ -48,5 +48,16 @@ FLAGS: FLAGS_T;
 -- GENERAL PURPOSE
 type REG_T is array (Natural range <>) of INTEGER;
 REG: REG_T(0..20);
+-- ACCUMULATOR
+AC: REG_T;
+-- procedures
 procedure start;
+procedure print_cmd(CMD: CMD_T) ;
+function run_cmd_nop(CMD: CMD_T) return INTEGER;
+function run_cmd_jmp(CMD: CMD_T) return INTEGER;
+function run_cmd_mov(CMD: CMD_T) return INTEGER;
+function run_cmd_add(CMD: CMD_T) return INTEGER;
+function run_cmd_print(CMD: CMD_T) return INTEGER;
+function run_cmd_sub(CMD: CMD_T) return INTEGER;
+function run_cmd_mul(CMD: CMD_T) return INTEGER;
 end vm;
